@@ -7,3 +7,5 @@ public enum Industry {
     MEDICAL,
     OTHER
 }
+
+

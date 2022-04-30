@@ -1,12 +1,23 @@
 package Main;
 
 import Classes.Functionality;
+import Classes.Lead;
 import Enums.Status;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
+        Lead pepe = new Lead ("pepe", "398475093", "293847", "029384");
+        HashMap<Integer, Lead> leads = new HashMap<>();
+        leads.put(pepe.getId(), pepe);
+        Functionality f = new Functionality();
+        Scanner scanner = new Scanner(System.in);
+        f.setLeadMap(leads);
+        f.convertLead(scanner);
+        /*
 
         Functionality f = new Functionality();
         Scanner scanner = new Scanner(System.in);
@@ -37,13 +48,17 @@ public class Main {
 
 
         //If “convert id”
-        f.convertLead(idmomentaneo,scanner);
+        f.convertLead(scanner);
 
 
         //If “close-lost id” or “close-won id” where “id”
         Status newStatus = Status.CLOSED_LOST; //should read this from the input
         f.changeOppStatus(idmomentaneo, newStatus);
 
+
+
+
+         */
 
 
     }
