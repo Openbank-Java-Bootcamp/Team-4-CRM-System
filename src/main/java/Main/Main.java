@@ -1,8 +1,7 @@
 package Main;
 
-import Classes.Functionality;
+import Classes.CRM;
 import Classes.Lead;
-import Enums.Status;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -13,7 +12,7 @@ public class Main {
         Lead pepe = new Lead ("pepe", "398475093", "293847", "029384");
         HashMap<Integer, Lead> leads = new HashMap<>();
         leads.put(pepe.getId(), pepe);
-        Functionality f = new Functionality();
+        CRM f = new CRM();
         Scanner scanner = new Scanner(System.in);
         f.setLeadMap(leads);
         f.convertLead(scanner);
