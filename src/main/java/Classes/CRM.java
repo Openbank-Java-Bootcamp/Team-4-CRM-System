@@ -7,19 +7,19 @@ import java.util.Locale;
 
 import java.util.*;
 
-public class Functionality {
+public class CRM {
     private static Map<Integer,Lead> leadMap;
     private static Map<Integer,Contact> contactMap;
     private static Map<Integer,Opportunity> opportunityMap;
 
-    public Functionality() {
+    public CRM() {
         this.leadMap = new HashMap<>();
         this.contactMap = new HashMap<>();
         this.opportunityMap = new HashMap<>();
     }
 
     public static void setLeadMap(Map<Integer, Lead> leadMap) {
-        Functionality.leadMap = leadMap;
+        CRM.leadMap = leadMap;
     }
 
     public void processInput(String input){
@@ -47,9 +47,29 @@ public class Functionality {
         }
     }
 
-    public void leadDetail(int id){
-        Lead leadToDisplay = leadMap.get(id);
-        System.out.println(leadToDisplay.toString());
+    public void leadDetail(Scanner scanner) {
+        System.out.println("There are the Leads. Type an [id] for more details of that Lead");
+        System.out.println();
+        listIdName();
+
+        System.out.println("Please, insert the id of the Lead");
+        boolean idOk = false;
+        while (!idOk) {
+            try {
+                int id = scanner.nextInt();
+                if (leadMap.get(id) != null) {
+                    System.out.println(leadMap.get(id).toString());
+                    idOk = true;
+                } else {
+                    System.out.println("The entered id does not exist. Please, try again");
+                    scanner.next();
+                }
+            } catch (Exception e) {
+                System.out.println("The id entered is wrong. Please, try again");
+                scanner.next();
+            }
+
+        }
     }
 
     public void convertLead(Scanner scanner){
@@ -188,8 +208,42 @@ public class Functionality {
         return quantity;
     }
 
-    public void changeOppStatus(int id,Status status){
-        opportunityMap.get(id).setStatus(status);
+    public void changeOppStatus(Scanner scanner){
+        System.out.println("You are changing the status of the Opportunity");
+        System.out.println("Please, enter the commands [close-lost id] or [close-won id] with the id of the Opportunity you want to change");
+        System.out.println("For example, if you wants to close lost the Opportunity with id 4321, you have to type [close-lost 4321]");
+
+        Opportunity opportunity = new Opportunity();
+
+        boolean idOk = false;
+        boolean command = false;
+
+        String[] typed = scanner.nextLine().toLowerCase().split(" ");
+
+        while (!idOk && !command) {
+            if (typed.length != 2) {
+                System.out.println("The command entered is wrong. Please, try again");
+                scanner.next();
+            } else {
+                opportunity = opportunityMap.get(typed[1]);
+                if (opportunity != null) {
+                    command = true;
+                }
+
+                switch (typed[0]) {
+                    case "close-lost":
+                        opportunity.setStatus(Status.CLOSED_LOST);
+                        command = true;
+                        break;
+                    case "close-won":
+                        opportunity.setStatus(Status.CLOSED_WON);
+                        command = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
 

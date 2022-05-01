@@ -20,6 +20,9 @@ public class Opportunity {
         this.id = idCount++;
     }
 
+    public Opportunity() {
+    }
+
     public int getId() {
         return id;
     }
