@@ -14,8 +14,8 @@ public class Main {
         leads.put(pepe.getId(), pepe);
         CRM f = new CRM();
         Scanner scanner = new Scanner(System.in);
-        f.setLeadMap(leads);
-        f.convertLead(scanner);
+        //f.setLeadMap(leads);
+        //f.convertLead(scanner);
         /*
 
         Functionality f = new Functionality();
@@ -59,6 +59,7 @@ public class Main {
 
          */
 
+        f.createLead(scanner);
 
     }
 }

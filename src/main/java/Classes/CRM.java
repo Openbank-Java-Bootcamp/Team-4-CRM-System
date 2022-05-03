@@ -6,6 +6,8 @@ import Enums.Status;
 import java.util.Locale;
 
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class CRM {
     private static Map<Integer,Lead> leadMap;
@@ -26,17 +28,53 @@ public class CRM {
 
     }
 
-    public void createLead(Scanner scanner){
+    public void createLead(Scanner scanner) {
         System.out.println("Please insert the name of the new lead");
         String name = scanner.nextLine();
+        boolean isNumber = false;
+        while (isNumber==false) { //valida que no hayan numeros
+            if(!name.matches(".*[0-9].*")){
+                isNumber = true;
+            }
+            else{
+                System.err.println("Please select a valid name.");
+                name=scanner.nextLine();
+            }
+        }
+
         System.out.println("Please insert the phone number of the new lead");
         String phoneNumber = scanner.nextLine();
+        boolean isWord = false;
+        while (isWord==false) { //valida que solo hayan numeros y el tamaño
+            if(phoneNumber.matches(".*[0-9].*") && phoneNumber.length()==9){
+                isWord = true;
+            }
+            else{
+                System.err.println("Please select a valid phone number.");
+                phoneNumber=scanner.nextLine();
+            }
+        }
+
         System.out.println("Please insert the email address of the new lead");
         String emailAddress = scanner.nextLine();
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(emailAddress);
+        boolean isEmail=false;
+        while(isEmail==false){
+            if (mather.find()==true) {
+                isEmail=true;
+            }
+            else{
+                System.err.println("Please select a valid email.");
+                emailAddress = scanner.nextLine();
+            }
+        }
+
         System.out.println("Please insert the company the new lead works for");
-        String companyName = scanner.nextLine();
-        Lead lead = new Lead(name,phoneNumber,emailAddress,companyName);
-        this.leadMap.put(lead.getId(),lead);
+        String companyName = scanner.nextLine(); //pueden haber letras y numeros
+
+        Lead lead = new Lead(name, phoneNumber, emailAddress, companyName);
+        this.leadMap.put(lead.getId(), lead);
     }
 
     public void listIdName(){
