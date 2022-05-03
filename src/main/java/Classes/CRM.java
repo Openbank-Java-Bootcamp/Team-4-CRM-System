@@ -247,9 +247,13 @@ public class CRM {
     }
 
     public void changeOppStatus(Scanner scanner){
-        System.out.println("You are changing the status of the Opportunity");
-        System.out.println("Please, enter the commands [close-lost id] or [close-won id] with the id of the Opportunity you want to change");
-        System.out.println("For example, if you wants to close lost the Opportunity with id 4321, you have to type [close-lost 4321]");
+        System.out.println();
+        System.out.println();
+        System.out.println(Colors.GREEN_BOLD_BRIGHT + "You are going to change the status of an Opportunity");
+        System.out.println(Colors.RESET + "Please, enter the commands" + Colors.YELLOW_BOLD_BRIGHT + " [close-lost id]"
+                + Colors.RESET + " or " + Colors.YELLOW_BOLD_BRIGHT + "[close-won id]"
+                + Colors.RESET + " with the id of the Opportunity you want to change");
+        System.out.println("For example, if you wants to close lost the Opportunity with id \"4321\", you have to type" + Colors.YELLOW_BRIGHT + " [close-lost 4321]");
 
         Opportunity opportunity = new Opportunity();
 
@@ -261,7 +265,7 @@ public class CRM {
         while (!idOk && !command) {
             if (typed.length != 2) {
                 System.out.println("The command entered is wrong. Please, try again");
-                scanner.next();
+                scanner.nextLine();
             } else {
                 opportunity = opportunityMap.get(typed[1]);
                 if (opportunity != null) {
