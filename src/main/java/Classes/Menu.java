@@ -34,7 +34,7 @@ public class Menu {
         scanner.nextLine();
     }
 
-    public static void displayMenu(){
+    public static void displayMenu(Scanner scanner, CRM crm){
 
         System.out.print(Colors.GREEN_BOLD_BRIGHT);
         System.out.println("You have the following options:");
@@ -46,12 +46,10 @@ public class Menu {
         System.out.println("  - Turn a Lead into an Opportunity" + Colors.YELLOW_BRIGHT + " [convert id]" + Colors.RESET);
         System.out.println("  - Change Opportunity status"  + Colors.YELLOW_BRIGHT + " [change status]" + Colors.RESET);
         System.out.println("  - Close the program"  + Colors.YELLOW_BRIGHT + " [exit]" + Colors.RESET);
-        Scanner scanner = new Scanner(System.in);
-        selectOption(scanner);
+        selectOption(scanner,crm);
     }
 
-    public static void selectOption(Scanner scanner){
-        CRM crm = new CRM();
+    public static void selectOption(Scanner scanner, CRM crm){
         boolean selected = false;
         String option = "";
         while (option.isEmpty()){
@@ -63,7 +61,7 @@ public class Menu {
                 case "show leads":
                     crm.listIdName();
                     break;
-                case "lookuo lead id":
+                case "lookup lead id":
                     crm.leadDetail(scanner);
                     break;
                 case "convert id":

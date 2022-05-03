@@ -10,19 +10,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Menu.welcome();
-        Menu.displayMenu();
-
-
-
-
-        Lead pepe = new Lead ("pepe", "398475093", "293847", "029384");
-        HashMap<Integer, Lead> leads = new HashMap<>();
-        leads.put(pepe.getId(), pepe);
-        CRM f = new CRM();
+        CRM crm = new CRM();
         Scanner scanner = new Scanner(System.in);
-        //f.setLeadMap(leads);
-        //f.convertLead(scanner);
+        Menu.welcome();
+        Menu.displayMenu(scanner, crm);
+
+
 
 
         //Functionality f = new Functionality();
@@ -34,14 +27,16 @@ public class Main {
         System.out.println("To see a lead details type \"Lookup Lead id\"");
         System.out.println("To covert lead into opportunity type \"convert id\"");
         System.out.println("To change an opportunity status type \"close-lost id\" or \"close-won id\"");
-
+        /*
         String userInput = scanner.nextLine();
         f.processInput(userInput);
+
+         */
 
         //metodo que reciba el user inout y analice las distintas posibilidades con sus
         // requerimientos de formato y excepciones.
 
-
+        /*
         //If "New Lead"
         f.createLead(scanner);
 
@@ -62,11 +57,13 @@ public class Main {
         f.changeOppStatus(idmomentaneo, newStatus);*/
 
 
-
-        f.setLeadMap(leads);
+        /*
         f.convertLead(scanner);
 
         f.createLead(scanner);
+
+
+         */
 
     }
 }

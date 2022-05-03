@@ -14,18 +14,23 @@ public class CRM {
     private static Map<Integer,Contact> contactMap;
     private static Map<Integer,Opportunity> opportunityMap;
 
+    private static Menu menu = new Menu();
+
     public CRM() {
         this.leadMap = new HashMap<>();
         this.contactMap = new HashMap<>();
         this.opportunityMap = new HashMap<>();
+
+    }
+
+
+
+    public void processInput(String input){
+
     }
 
     public static void setLeadMap(Map<Integer, Lead> leadMap) {
         CRM.leadMap = leadMap;
-    }
-
-    public void processInput(String input){
-
     }
 
     public void createLead(Scanner scanner) {
@@ -73,8 +78,11 @@ public class CRM {
         System.out.println("Please insert the company the new lead works for");
         String companyName = scanner.nextLine(); //pueden haber letras y numeros
 
-        Lead lead = new Lead(name, phoneNumber, emailAddress, companyName);
-        this.leadMap.put(lead.getId(), lead);
+        Lead new_lead = new Lead (name, phoneNumber, emailAddress, companyName);
+
+        leadMap.put(new_lead.getId(), new_lead);
+
+        menu.displayMenu(scanner, this);
     }
 
     public void listIdName(){
@@ -108,17 +116,17 @@ public class CRM {
             }
 
         }
+        menu.displayMenu(scanner, this);
     }
 
     public void convertLead(Scanner scanner){
+        System.out.println(Colors.GREEN_BOLD_BRIGHT + "You selected to upgrade a LEAD to an OPPORTUNITY" + Colors.RESET);
         //id
         int id = IdNumber(scanner);
         Lead leadToConvert = leadMap.get(id);
-        System.out.println("Lead upgrade correctly!");
         //creation of the Contact
         Contact contact = new Contact(leadToConvert.getName(), leadToConvert.getPhoneNumber(), leadToConvert.getEmailAddress(), leadToConvert.getCompanyName());
         this.contactMap.put(contact.getId(),contact);
-        System.out.println("Now lets create your account:");
         //product
         printEnum("product");
         Product product = productSelection(scanner);
@@ -146,7 +154,8 @@ public class CRM {
         account.getOpportunityList().add(opportunity);
         leadMap.remove(id); //Leads are removed from the system once they have been successfully converted.
         //lo elimino del hashmap que es donde lo estoy "almacenando" para ser accedido por el usuario.
-        System.out.println("Lead coverted correctly!");
+        System.out.println(Colors.GREEN_BOLD_BRIGHT +"Lead upgrade correctly!"+ Colors.RESET);
+        menu.displayMenu(scanner, this);
     }
 
     public Industry industrySelection(Scanner scanner){
@@ -203,28 +212,21 @@ public class CRM {
         return p;
     }
 
-    //Method for the verification that the ID belongs to an Lead
-    public boolean validLeadId(int id){
-        for (int k : leadMap.keySet()) {
-            if (k == id) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     //Method that verifies that the id is lead and a String
     public int IdNumber(Scanner scanner){
-        System.out.println("Please enter de ID of the lead you would like to convert");
+        System.out.println("Please enter de " +  Colors.YELLOW_BOLD_BRIGHT + " [ID] " + Colors.RESET+ "of the lead you would like to upgrade: ");
         int id = 0;
         try {
             id = scanner.nextInt();
-            while (!validLeadId(id)) {
+            boolean valid = leadMap.containsKey(id);
+            while (!valid) {
                 System.err.println("Lead ID not valid");
                 id = scanner.nextInt();
+                valid = leadMap.containsKey(id);
             }
         }catch(Exception e){
-            System.err.println("Invalid value. Please try again");
+            System.err.println("That´s not a number. Please try again");
             scanner.next();
             id = IdNumber(scanner);
         }
@@ -239,7 +241,7 @@ public class CRM {
                 quantity = scanner.nextInt();
             }
         }catch(Exception e){
-            System.err.println("Invalid value. Please try again");
+            System.err.println("That´s not a number. Please try again");
             scanner.next();
             quantity = quantityNumber(scanner);
         }
@@ -286,6 +288,7 @@ public class CRM {
                 }
             }
         }
+        menu.displayMenu(scanner, this);
     }
 
 
@@ -327,7 +330,7 @@ public class CRM {
         return false;
     }
 
-    private static String countryInput(Scanner scanner){
+    public static String countryInput(Scanner scanner){
         System.out.println("Please insert the country of the company");
         String city = scanner.next();
         while (!validateCountry(city)){
