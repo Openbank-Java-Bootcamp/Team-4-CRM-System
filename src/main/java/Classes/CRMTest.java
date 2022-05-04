@@ -1,5 +1,9 @@
 package Classes;
 
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import nl.altindag.console.ConsoleCaptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +25,7 @@ class CRMTest {
     //CONVERT ID TEST COVERAGE
     @Test
     public void IdNumber_Throw_notINT(){
-        //con el scane reader parece que se falsea el scanner
+        //con el scan reader parece que se falsea el scanner
         StringReader sr = new StringReader("s");
         Scanner scan = new Scanner(sr);
         assertThrows(Exception.class,() -> crm.IdNumber(scan));
@@ -83,7 +87,25 @@ class CRMTest {
         //mensaje error
     }
 
-    //mañana sigo
+
+    /*//CREATE LEAD TEST
+    @Test //no funciona porq el scanner es siempre null
+    public void nameLeadStandardAndErrorOutput() {
+        ConsoleCaptor consoleCaptor = new ConsoleCaptor();
+        //Scanner s = new Scanner("maria");
+        crm.createLead(s);
+
+        assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the name of the new lead");
+        /*assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the phone number of the new lead");
+        assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the email address of the new lead");
+        assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the company the new lead works for");
+
+        assertThat(consoleCaptor.getErrorOutput()).contains("Please select a valid name.");
+        /*assertThat(consoleCaptor.getErrorOutput()).contains("Please select a valid phone number.");
+        assertThat(consoleCaptor.getErrorOutput()).contains("Please select a valid email.");
+
+        consoleCaptor.close();
+    }*/
 
 
 }
