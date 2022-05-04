@@ -34,6 +34,7 @@ public class CRM {
     }
 
     public void createLead(Scanner scanner) {
+        //Name
         System.out.println("Please insert the name of the new lead");
         String name = scanner.nextLine();
         boolean isNumber = false;
@@ -46,11 +47,11 @@ public class CRM {
                 name=scanner.nextLine();
             }
         }
-
+        //Phone Number
         System.out.println("Please insert the phone number of the new lead");
         String phoneNumber = scanner.nextLine();
         boolean isWord = false;
-        while (isWord==false) { //valida que solo hayan numeros y el tamaño
+        while (isWord==false) { //valida que solo hayan numeros y el tamaño 9
             if(phoneNumber.matches(".*[0-9].*") && phoneNumber.length()==9){
                 isWord = true;
             }
@@ -59,22 +60,23 @@ public class CRM {
                 phoneNumber=scanner.nextLine();
             }
         }
-
+        //Email
         System.out.println("Please insert the email address of the new lead");
         String emailAddress = scanner.nextLine();
-        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        Matcher mather = pattern.matcher(emailAddress);
         boolean isEmail=false;
         while(isEmail==false){
+            Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+            Matcher mather = pattern.matcher(emailAddress);
             if (mather.find()==true) {
                 isEmail=true;
             }
             else{
                 System.err.println("Please select a valid email.");
                 emailAddress = scanner.nextLine();
+                //createLead(scanner);
             }
         }
-
+        //Company name
         System.out.println("Please insert the company the new lead works for");
         String companyName = scanner.nextLine(); //pueden haber letras y numeros
 

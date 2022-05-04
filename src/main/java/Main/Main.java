@@ -60,10 +60,10 @@ public class Main {
         /*
         f.convertLead(scanner);
 
-        f.createLead(scanner);
+        crm.createLead(scanner);
+        */
 
 
-         */
 
     }
 }
