@@ -15,9 +15,6 @@ public class Main {
         Menu.welcome();
         Menu.displayMenu(scanner, crm);
 
-
-
-
         //Functionality f = new Functionality();
         //Scanner scanner = new Scanner(System.in);
 
