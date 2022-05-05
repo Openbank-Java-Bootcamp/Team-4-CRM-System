@@ -8,6 +8,7 @@ public class Colors {
 
     public static final String YELLOW_BRIGHT = "\033[0;93m";
     public static final String YELLOW_BOLD_BRIGHT = "\033[1;93m";
+    public static final String RED_BRIGHT = "\033[0;91m";
 
     /*// BRIGHT WHITE
     public static final String WHITE_BRIGHT = "\033[0;97m";
@@ -20,7 +21,7 @@ public class Colors {
     public static final String BLUE_BRIGHT = "\033[0;94m";
     // RED
     public static final String RED = "\033[0;31m";
-    public static final String RED_BRIGHT = "\033[0;91m";
+
     // GREEN
 
     // YELLOW
