@@ -42,5 +42,11 @@ public class Main {
         Menu.welcome();
         Menu.displayMenu(scanner, crm);
 
+       String userInput = scanner.nextLine();
+        //crm.processInput(userInput);
+
+        crm.createLead(scanner);
+
+
     }
 }
