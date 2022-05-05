@@ -10,14 +10,15 @@ public class Opportunity {
     private Contact decisionMaker;
     private Status status;
     private int id;
-    private int idCount=1;
+    public static int idCount = 1;
 
     public Opportunity(Product product, int quantity, Contact decisionMaker, Status status) {
         this.product = product;
         this.quantity = quantity;
         this.decisionMaker = decisionMaker;
         this.status = status;
-        this.id = idCount++;
+        this.id = idCount;
+        Opportunity.idCount++;
     }
 
     public Opportunity() {
@@ -58,4 +59,5 @@ public class Opportunity {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }

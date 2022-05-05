@@ -1,30 +1,46 @@
 package Main;
 
-import Classes.CRM;
-import Classes.Lead;
-import Classes.Menu;
+import Classes.*;
+import Enums.Product;
+import Enums.Status;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Menu.welcome();
-        Menu.displayMenu();
 
+        CRM crm = new CRM();
 
+        //FOR TESTING...........
 
-        /*
-        Lead pepe = new Lead ("pepe", "398475093", "293847", "029384");
-        HashMap<Integer, Lead> leads = new HashMap<>();
-        leads.put(pepe.getId(), pepe);
-        CRM f = new CRM();
+        Lead lead1 = new Lead("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
+        Lead lead2 = new Lead("Anier Alvarez", "675345829", "pedro@yahho.es", "Farmacy");
+        Lead lead3 = new Lead("Laura Perez", "675345829", "pedro@yahho.es", "Mercadona");
+
+        Map<Integer,Lead> mapLeads = new HashMap<>();
+        mapLeads.put(lead1.getId(), lead1);
+        mapLeads.put(lead2.getId(), lead2);
+        mapLeads.put(lead3.getId(), lead3);
+
+        crm.setLeadMap(mapLeads);
+
+        //Opportunity
+        Product prod = Product.BOX;
+        Contact contact = new Contact("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
+        Status status = Status.OPEN;
+        Opportunity op = new Opportunity(prod,3,contact,status);
+        Map<Integer,Opportunity> mapOp = new HashMap<>();
+        mapOp.put(op.getId(),op);
+        crm.setOpportunityMap(mapOp);
+
+        //END OF TESTING..........
+
         Scanner scanner = new Scanner(System.in);
-        f.setLeadMap(leads);
-        f.convertLead(scanner);
-        */
-
+        Menu.welcome();
+        Menu.displayMenu(scanner, crm);
 
     }
 }

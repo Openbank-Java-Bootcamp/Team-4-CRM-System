@@ -8,14 +8,18 @@ public class Lead {
     private String emailAddress;
     private String companyName;
     private int id;
-    private int idCount =1;
+    public static int idCount = 1;
+
+    public Lead() {
+    }
 
     public Lead(String name, String phoneNumber, String emailAddress, String companyName) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.companyName = companyName;
-        this.id = idCount++;
+        this.id = idCount;
+        Lead.idCount++;
     }
 
     public int getId() {
