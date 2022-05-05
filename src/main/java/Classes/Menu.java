@@ -35,7 +35,7 @@ public class Menu {
 
     }
 
-    public static void displayMenu(Scanner scanner, CRM crm){
+    public static void displayMenu(Scanner scanner, CRM crm) throws Exception {
         System.out.print(Colors.GREEN_BOLD_BRIGHT);
         System.out.println("You have the following options:");
         System.out.println("Please, type the command indicated [in brackets] for the action you want to perform");
@@ -50,7 +50,7 @@ public class Menu {
         selectOption(scanner,crm);
     }
 
-    public static void selectOption(Scanner scanner, CRM crm){
+    public static void selectOption(Scanner scanner, CRM crm) throws Exception {
         boolean selected = false;
         String option = "";
         while (option.isEmpty()){

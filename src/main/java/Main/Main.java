@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
       
         CRM crm = new CRM();
 
@@ -43,7 +43,9 @@ public class Main {
         Menu.displayMenu(scanner, crm);
       
        String userInput = scanner.nextLine();
-        f.processInput(userInput);
+        //crm.processInput(userInput);
+
+        crm.createLead(scanner);
 
 
     }

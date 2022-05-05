@@ -38,10 +38,18 @@ class CRMTest {
     private CRM crm;
     private Scanner s;
 
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalErr = System.err;
+
 
     @BeforeEach
     public void setUp(){
         crm = new CRM();
+        System.setErr(new PrintStream(errContent));
+    }
+    @After
+    public void restoreStreams() {
+        System.setErr(originalErr);
     }
 
     //CONVERT ID TEST COVERAGE
@@ -147,7 +155,7 @@ class CRMTest {
     }
 
     @Test
-    public void changeNewStatus_PermittedCommand(){
+    public void changeNewStatus_PermittedCommand() throws Exception {
         //Opportunity
         Product prod = Product.BOX;
         Contact contact = new Contact("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
@@ -164,7 +172,7 @@ class CRMTest {
     }
 
     @Test
-    public void changeNewStatus_NoPermittedCommand(){
+    public void changeNewStatus_NoPermittedCommand() throws Exception {
         //Opportunity
         Product prod = Product.BOX;
         Contact contact = new Contact("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
@@ -350,25 +358,34 @@ class CRMTest {
     }
 
      */
-    
 
-    /*//CREATE LEAD TEST
-    @Test //no funciona porq el scanner es siempre null
-    public void nameLeadStandardAndErrorOutput() {
-        ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        //Scanner s = new Scanner("maria");
-        crm.createLead(s);
 
-        assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the name of the new lead");
-        /*assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the phone number of the new lead");
-        assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the email address of the new lead");
-        assertThat(consoleCaptor.getStandardOutput()).contains("Please insert the company the new lead works for");
+    //================= CREATE A LEAD TEST==================
 
-        assertThat(consoleCaptor.getErrorOutput()).contains("Please select a valid name.");
-        /*assertThat(consoleCaptor.getErrorOutput()).contains("Please select a valid phone number.");
-        assertThat(consoleCaptor.getErrorOutput()).contains("Please select a valid email.");
+    @Test
+    public void nameLead_Works() throws Exception {
+        StringReader sr = new StringReader("pepe");
+        Scanner scan = new Scanner(sr);
+        assertEquals("pepe", crm.nameLead(scan) );
+    }
+    @Test
+    public void phoneNumberLead_Works(){
+        StringReader sr = new StringReader("675345829");
+        Scanner scan = new Scanner(sr);
+        assertEquals("675345829", crm.phoneNumberLead(scan) );
+    }
+    @Test
+    public void emailLead_Works(){
+        StringReader sr = new StringReader("paula@gmail.com");
+        Scanner scan = new Scanner(sr);
+        assertEquals("paula@gmail.com", crm.emailLead(scan) );
+    }
+    @Test
+    public void companyLead_Works(){
+        StringReader sr = new StringReader("Matucos");
+        Scanner scan = new Scanner(sr);
+        assertEquals("Matucos", crm.companyNameLead(scan) );
+    }
 
-        consoleCaptor.close();
-    }*/
 
 }

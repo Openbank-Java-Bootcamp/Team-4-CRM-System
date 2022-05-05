@@ -28,11 +28,9 @@ public class CRM {
 
     public void processInput(String input){
 
-    }*/
+    }
 
     //================== SETTER =======================
-
-    public void setLeadMap(Map<Integer, Lead> leadMap) {
 
     public static Map<Integer, Lead> getLeadMap() {
         return leadMap;
@@ -60,7 +58,7 @@ public class CRM {
     }
 
     //================= CREATE A LEAD ==================
-    public void createLead(Scanner scanner) {
+    public void createLead(Scanner scanner) throws Exception {
 
         //Header of the method
         System.out.println();
@@ -68,20 +66,38 @@ public class CRM {
         System.out.println(Colors.YELLOW_BOLD_BRIGHT + "You must enter the data that will be requested below");
         System.out.println(Colors.RESET);
 
-        //Name
+        Lead new_lead = new Lead (nameLead(scanner), phoneNumberLead(scanner), emailLead(scanner), companyNameLead(scanner));
+        System.out.println(new_lead.getId());
+
+        leadMap.put(new_lead.getId(), new_lead);
+
+
+        //Foot of the method
+        System.out.println();
+        System.out.println(Colors.YELLOW_BOLD_BRIGHT + "You have inserted a Lead");
+        Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
+        System.out.println();
+        System.out.println(Colors.RESET + "---------------------------------------------------------------------------------");
+        System.out.println();
+        Menu.displayMenu(scanner, this);
+    }
+    public String nameLead(Scanner scanner) throws Exception {
+
         System.out.println("Please insert the name of the new lead");
         String name = scanner.nextLine();
         boolean isNumber = false;
         while (!isNumber) { //valida que no hayan numeros
-            if(!name.matches(".*[0-9].*")){
-                isNumber = true;
-            }
-            else{
-                System.err.println("Please select a valid name");
-                name=scanner.nextLine();
-            }
+             if(!name.matches(".*[0-9].*")){
+                 isNumber = true;
+             }
+             else{
+                 System.err.println("Please select a valid name");
+                 name=scanner.nextLine();
+             }
         }
-        //Phone Number
+        return name;
+    }
+    public String phoneNumberLead(Scanner scanner){
         System.out.println("Please insert the phone number of the new lead");
         String phoneNumber = scanner.nextLine();
         boolean isWord = false;
@@ -94,7 +110,9 @@ public class CRM {
                 phoneNumber=scanner.nextLine();
             }
         }
-        //Email
+        return phoneNumber;
+    }
+    public String emailLead(Scanner scanner){
         System.out.println("Please insert the email address of the new lead");
         String emailAddress = scanner.nextLine();
         boolean isEmail=false;
@@ -107,45 +125,33 @@ public class CRM {
             else{
                 System.err.println("Please select a valid email");
                 emailAddress = scanner.nextLine();
-                //createLead(scanner);
             }
         }
-        //Company name
+        return emailAddress;
+    }
+    public String companyNameLead(Scanner scanner){
         System.out.println("Please insert the company the new lead works for");
-        String companyName = scanner.nextLine(); //pueden haber letras y numeros
-
-        Lead new_lead = new Lead (name, phoneNumber, emailAddress, companyName);
-        System.out.println(new_lead.getId());
-
-        leadMap.put(new_lead.getId(), new_lead);
-
-        //Foot of the method
-        System.out.println();
-        System.out.println(Colors.YELLOW_BOLD_BRIGHT + "You have inserted a Lead");
-        Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
-        System.out.println();
-        System.out.println(Colors.RESET + "---------------------------------------------------------------------------------");
-        System.out.println();
-        Menu.displayMenu(scanner, this);
+        String companyName = scanner.nextLine(); //pueden haber letras y numeros*/
+        return companyName;
     }
 
     //====================== SHOW LEADS =======================
-    public void listIdName(CRM crm){
+    public void listIdName(CRM crm) throws Exception {
 
-        //Header of the Method
-        System.out.println();
-        System.out.println(Colors.GREEN_BOLD_BRIGHT + "You have selected the \"Display list of Leads\" option");
+            //Header of the Method
+            System.out.println();
+            System.out.println(Colors.GREEN_BOLD_BRIGHT + "You have selected the \"Display list of Leads\" option");
 
-        //The company has no Leads
-        if (leadMap.size() == 0){
-            System.out.println(Colors.RESET + "The company has no leads yet");
-        } else {
+            //The company has no Leads
+            if (leadMap.size() == 0) {
+                System.out.println(Colors.RESET + "The company has no leads yet");
+            } else {
 
-            System.out.println(Colors.YELLOW_BOLD_BRIGHT + "The company owns the following Leads:");
-            System.out.println(Colors.RESET);
+                System.out.println(Colors.YELLOW_BOLD_BRIGHT + "The company owns the following Leads:");
+                System.out.println(Colors.RESET);
 
-            //List of Leads
-            showLeadsNamesAndCompany();
+                //List of Leads
+                showLeadsNamesAndCompany();
           
    /* public void listIdName(){
         if(!leadMap.isEmpty()){
@@ -157,20 +163,20 @@ public class CRM {
             System.out.println("No leads found");
         } */
 
-        //Foot of method
-        System.out.println();
-        Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
-        System.out.println();
-        System.out.println(Colors.RESET + "---------------------------------------------------------------------------------");
-        System.out.println();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println();
-        Menu.displayMenu(scanner, this);
-    }
-
+                //Foot of method
+                System.out.println();
+                Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
+                System.out.println();
+                System.out.println(Colors.RESET + "---------------------------------------------------------------------------------");
+                System.out.println();
+                Scanner scanner = new Scanner(System.in);
+                System.out.println();
+                Menu.displayMenu(scanner, this);
+            }
+        }
     //========================== SHOW DETAILS OF A LEAD ===========================
 
-    public void leadDetail(Scanner scanner, CRM crm) {
+    public void leadDetail(Scanner scanner, CRM crm) throws Exception {
         //Header of the Method
         System.out.println();
         System.out.println(Colors.GREEN_BOLD_BRIGHT + "You have selected the \"Show details of a Lead\" option");
@@ -231,7 +237,7 @@ public class CRM {
 
     //=================== CONVERT A LEAD INTO AN OPPORTUNITY ======================
       
-    public void convertLead(Scanner scanner) {
+    public void convertLead(Scanner scanner) throws Exception {
         //Header of the Method
         System.out.println();
         //The company has no Leads
@@ -505,7 +511,7 @@ public class CRM {
 
     //=================== CHANGE STATUS ===========================
     
-    public void changeOppStatus(Scanner scanner) {
+    public void changeOppStatus(Scanner scanner) throws Exception {
 
         //Header of the method
         System.out.println();
@@ -535,7 +541,7 @@ public class CRM {
     //============= UTILITIES METHODS ===========
       
     //Assign new Status
-    public void changeNewStatus(Scanner scanner){
+    public void changeNewStatus(Scanner scanner) throws Exception {
         boolean commandOk = false;
         String[] typed = scanner.nextLine().toLowerCase().split(" ");
         Opportunity opportunity = new Opportunity();
