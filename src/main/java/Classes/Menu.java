@@ -32,7 +32,6 @@ public class Menu {
         System.out.println(enter);
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-
     }
 
     public static void displayMenu(Scanner scanner, CRM crm) throws Exception {

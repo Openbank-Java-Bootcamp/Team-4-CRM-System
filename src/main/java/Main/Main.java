@@ -25,7 +25,7 @@ public class Main {
         mapLeads.put(lead2.getId(), lead2);
         mapLeads.put(lead3.getId(), lead3);
 
-        crm.setLeadMap(mapLeads);
+        CRM.setLeadMap(mapLeads);
 
         //Opportunity
         Product prod = Product.BOX;
@@ -34,14 +34,14 @@ public class Main {
         Opportunity op = new Opportunity(prod,3,contact,status);
         Map<Integer,Opportunity> mapOp = new HashMap<>();
         mapOp.put(op.getId(),op);
-        crm.setOpportunityMap(mapOp);
+        CRM.setOpportunityMap(mapOp);
 
         //END OF TESTING..........
 
         Scanner scanner = new Scanner(System.in);
         Menu.welcome();
         Menu.displayMenu(scanner, crm);
-      
+
        String userInput = scanner.nextLine();
         //crm.processInput(userInput);
 

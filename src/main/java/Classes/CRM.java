@@ -3,17 +3,10 @@ package Classes;
 import Enums.Industry;
 import Enums.Product;
 import Enums.Status;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.StringReader;
 import java.util.Locale;
-
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CRM {
     private static Map<Integer,Lead> leadMap;
@@ -21,16 +14,20 @@ public class CRM {
     private static Map<Integer,Opportunity> opportunityMap;
 
     public CRM() {
-        this.leadMap = new HashMap<>();
-        this.contactMap = new HashMap<>();
-        this.opportunityMap = new HashMap<>();
+        leadMap = new HashMap<>();
+        contactMap = new HashMap<>();
+        opportunityMap = new HashMap<>();
     }
+
 
     public void processInput(String input){
 
     }
 
     //================== SETTER =======================
+
+    //================== SETTERS AND GETTERS =======================
+
 
     public static Map<Integer, Lead> getLeadMap() {
         return leadMap;
@@ -40,7 +37,7 @@ public class CRM {
         return contactMap;
     }
 
-    public static void setContactMap(Map<Integer, Contact> contactMap) {
+    public void setContactMap(Map<Integer, Contact> contactMap) {
         CRM.contactMap = contactMap;
     }
 
@@ -58,6 +55,10 @@ public class CRM {
     }
 
     //================= CREATE A LEAD ==================
+
+
+
+
     public void createLead(Scanner scanner) throws Exception {
 
         //Header of the method
@@ -152,6 +153,7 @@ public class CRM {
 
                 //List of Leads
                 showLeadsNamesAndCompany();
+
           
    /* public void listIdName(){
         if(!leadMap.isEmpty()){
@@ -162,6 +164,19 @@ public class CRM {
         } else {
             System.out.println("No leads found");
         } */
+
+
+
+                /*
+            public void listIdName(){
+                if(!leadMap.isEmpty()){
+                    System.out.println("Showing list of corresponding names and id's from leads");
+                    for(Map.Entry<Integer,Lead> entry : leadMap.entrySet()){
+                    System.out.println(entry.getKey() + " = " + entry.getValue().getName());
+                } else {
+                    System.out.println("No leads found");
+            } */
+
 
                 //Foot of method
                 System.out.println();
@@ -174,6 +189,9 @@ public class CRM {
                 Menu.displayMenu(scanner, this);
             }
         }
+
+
+
     //========================== SHOW DETAILS OF A LEAD ===========================
 
     public void leadDetail(Scanner scanner, CRM crm) throws Exception {
@@ -517,10 +535,15 @@ public class CRM {
         System.out.println();
         System.out.println(Colors.GREEN_BOLD_BRIGHT + "You have selected the \"Change Opportunity status\" option");
         System.out.println(Colors.RESET);
-        if (opportunityMap.size() == 0) {
-            System.out.println(Colors.RESET + "The company has no Opportunities yet");
+        if (opportunityMap.isEmpty()) {
+            throw new Exception("The company has no Opportunities yet");
+            //System.out.println(Colors.RESET + "The company has no Opportunities yet");
         } else {
-            System.out.println("Please, enter the commands" + Colors.YELLOW_BOLD_BRIGHT + " [close-lost id]"
+            System.out.println(Colors.YELLOW_BOLD_BRIGHT + "The company owns the following Opportunities:");
+            System.out.println(Colors.RESET);
+            showOpportunities();
+            System.out.println();
+        System.out.println("Please, enter the commands" + Colors.YELLOW_BOLD_BRIGHT + " [close-lost id]"
                     + Colors.RESET + " or " + Colors.YELLOW_BOLD_BRIGHT + "[close-won id]"
                     + Colors.RESET + " with the id of the Opportunity you want to change");
             System.out.println("For example, if you wants to close lost the Opportunity with id \"4321\", you have to type"
@@ -528,7 +551,7 @@ public class CRM {
 
             changeNewStatus(scanner);
 
-    }
+        }
         //Foot of method
         System.out.println();
         Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
@@ -541,34 +564,51 @@ public class CRM {
     //============= UTILITIES METHODS ===========
       
     //Assign new Status
+
     public void changeNewStatus(Scanner scanner) throws Exception {
         boolean commandOk = false;
         String[] typed = scanner.nextLine().toLowerCase().split(" ");
         Opportunity opportunity = new Opportunity();
 
-        //lenght == 2
+    public static void changeNewStatus(Scanner scanner) throws Exception{
+        try {
+            String[] typed = scanner.nextLine().toLowerCase().split(" ");
+            Opportunity opportunity = new Opportunity();
+        
 
-        while (!commandOk) {
-            if (!typed[1].matches(".*[0-9].*")) {
-                System.out.println("The command entered is wrong. Please, try again");
-                Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
-                leadDetail(scanner, this);
-            } else {
+            if (typed.length != 2) {
+                throw new Exception("The command entered or the id are wrong");
+            }
+
+            if (typed[1].matches(".*[0-9].*")) {
                 opportunity = opportunityMap.get(Integer.parseInt(typed[1]));
-                if (typed.length == 2 && typed[0].equals("close-lost") && opportunity != null) {
-                    opportunityMap.get(opportunity.getId()).setStatus(Status.CLOSED_LOST);
-                    System.out.println("The status was changed successfully");
-                    commandOk = true;
-                } else if (typed.length == 2 && typed[0].equals("close-won") && opportunity != null) {
-                    opportunityMap.get(opportunity.getId()).setStatus(Status.CLOSED_WON);
-                    System.out.println("The status was changed successfully");
-                    commandOk = true;
+                if (opportunity != null) {
+                    switch (typed[0]) {
+                        case "close-lost" -> {
+                            opportunityMap.get(opportunity.getId()).setStatus(Status.CLOSED_LOST);
+                            System.out.println(Colors.GREEN_BOLD_BRIGHT + "The status was changed successfully into CLOSED_LOST"
+                                 + Colors.RESET);
+                        }
+                        case "close-won" -> {
+                            opportunityMap.get(opportunity.getId()).setStatus(Status.CLOSED_WON);
+                            System.out.println(Colors.GREEN_BOLD_BRIGHT + "The status was changed successfully into CLOSE_WON"
+                                  + Colors.RESET);
+                        }
+                        default -> {
+                            throw new Exception("The command entered is wrong");
+                        }
+                    }
                 } else {
-                    System.out.println("The command entered is wrong. Please, try again");
-                    Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
-                    leadDetail(scanner, this);
+                    throw new Exception("The id entered not exist");
+
                 }
             }
+
+        } catch (Exception e) {
+            //System.out.println(Colors.RED_BRIGHT + e.getMessage() + Colors.RESET);
+            System.out.println("Please, try again");
+            throw new Exception("cualquiera");
+            //changeNewStatus(scanner);
         }
     }
 
@@ -577,8 +617,16 @@ public class CRM {
         for (Map.Entry<Integer, Lead> entry : leadMap.entrySet()) {
             Integer key = entry.getKey();
             String name = entry.getValue().getName();
-            String company = entry.getValue().getCompanyName();
             System.out.println(key + ". " + name);
+        }
+    }
+
+    public static void showOpportunities(){
+        for (Map.Entry<Integer, Opportunity> entry : opportunityMap.entrySet()) {
+            Integer key = entry.getKey();
+            String name = entry.getValue().getDecisionMaker().getName();
+            String status = entry.getValue().getStatus().toString();
+            System.out.println(key + ". DECISION MAKER: " + name + ". STATUS: " + status);
         }
     }
 }

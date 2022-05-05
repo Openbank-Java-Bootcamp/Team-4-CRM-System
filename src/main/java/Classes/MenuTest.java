@@ -18,8 +18,19 @@ class MenuTest {
     }
 
     @Test
-    private void selectOption_NoPermittedCommand(){
+    public void selectOption_NoPermittedCommand(){
         Scanner scanner = new Scanner(new StringReader("close"));
+        assertThrows(Exception.class,() -> Menu.selectOption(scanner,crm));
+    }
+
+    @Test
+    public void selectOption_EmptyValue(){
+        Scanner scanner = new Scanner(new StringReader(""));
+        assertThrows(Exception.class,() -> Menu.selectOption(scanner,crm));
+    }
+
+    public void selectOption_PermittedCommand(){
+        Scanner scanner = new Scanner(new StringReader(""));
         assertThrows(Exception.class,() -> Menu.selectOption(scanner,crm));
 
     }

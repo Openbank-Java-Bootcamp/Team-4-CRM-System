@@ -4,8 +4,6 @@ import Enums.Product;
 import Enums.Status;
 import nl.altindag.console.ConsoleCaptor;
 
-import Enums.Product;
-import Enums.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,21 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import nl.altindag.console.ConsoleCaptor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.StringReader;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class CRMTest {
     private CRM crm;
@@ -148,11 +133,12 @@ class CRMTest {
     }
 
     @Test
-    public void changeOppStatus_opportunitiesMapEmpty(){
+    public void changeOppStatus_NoPermittedCommand(){
         StringReader sr = new StringReader("close");
         Scanner scan = new Scanner(sr);
         assertThrows(Exception.class,() -> crm.changeOppStatus(scan));
     }
+
 
     @Test
     public void changeNewStatus_PermittedCommand() throws Exception {
@@ -163,10 +149,10 @@ class CRMTest {
         Opportunity op = new Opportunity(prod,3,contact,status);
         Map<Integer,Opportunity> mapOp = new HashMap<>();
         mapOp.put(op.getId(),op);
-        crm.setOpportunityMap(mapOp);
+        CRM.setOpportunityMap(mapOp);
 
         Scanner scanner = new Scanner(new StringReader("close-lost 1"));
-        crm.changeNewStatus(scanner);
+        CRM.changeNewStatus(scanner);
 
         assertEquals(mapOp.get(1).getStatus(), Status.CLOSED_LOST);
     }
@@ -180,22 +166,22 @@ class CRMTest {
         Opportunity op = new Opportunity(prod,3,contact,status);
         Map<Integer,Opportunity> mapOp = new HashMap<>();
         mapOp.put(op.getId(),op);
-        crm.setOpportunityMap(mapOp);
+        CRM.setOpportunityMap(mapOp);
 
         Scanner scanner = new Scanner(new StringReader("close 1"));
-        crm.changeNewStatus(scanner);
-
-        assertThrows(Exception.class,() -> crm.changeNewStatus(scanner));
+        assertThrows(Exception.class,() -> CRM.changeNewStatus(scanner));
     }
 
+
+    @Test
     public void ContactFromLead_Works(){
         Lead l = new Lead("Paula", "662092398", "paula@gmail.com", "Matucos");
         Map<Integer,Lead> leadMap = new HashMap<>();
         leadMap.put(l.getId(), l);
-        crm.setLeadMap(leadMap);
+        CRM.setLeadMap(leadMap);
         Contact c = new Contact("Paula", "662092398", "paula@gmail.com", "Matucos");
-        assertThat(c.equals(crm.ContactFromLead(1)));
-        assertEquals(1, crm.getContactMap().size());
+        assertThat(c.equals(CRM.ContactFromLead(1)));
+        assertEquals(1, CRM.getContactMap().size());
     }
 
     @Test
