@@ -113,11 +113,13 @@ public class CRM {
     }
 
     public void listIdName(){
-
-        for(Map.Entry<Integer,Lead> entry : leadMap.entrySet()){
-            Integer key = entry.getKey();
-            String name = entry.getValue().getName();
-            System.out.println(key + "=" + name + " ");
+        if(!leadMap.isEmpty()){
+            System.out.println("Showing list of corresponding names and id's from leads");
+            for(Map.Entry<Integer,Lead> entry : leadMap.entrySet()){
+                System.out.println(entry.getKey() + " = " + entry.getValue().getName());
+            }
+        } else {
+            System.out.println("No leads found");
         }
     }
 
