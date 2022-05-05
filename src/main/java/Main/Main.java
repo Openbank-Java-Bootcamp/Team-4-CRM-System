@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
+      
         CRM crm = new CRM();
 
         //FOR TESTING...........
@@ -41,6 +41,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Menu.welcome();
         Menu.displayMenu(scanner, crm);
+      
+       String userInput = scanner.nextLine();
+        f.processInput(userInput);
+
 
     }
 }

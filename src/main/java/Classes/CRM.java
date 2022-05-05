@@ -3,11 +3,17 @@ package Classes;
 import Enums.Industry;
 import Enums.Product;
 import Enums.Status;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.StringReader;
 import java.util.Locale;
 
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CRM {
     private static Map<Integer,Lead> leadMap;
@@ -20,8 +26,6 @@ public class CRM {
         this.opportunityMap = new HashMap<>();
     }
 
-
-    /*
     public void processInput(String input){
 
     }*/
@@ -29,11 +33,30 @@ public class CRM {
     //================== SETTER =======================
 
     public void setLeadMap(Map<Integer, Lead> leadMap) {
-        CRM.leadMap = leadMap;
+
+    public static Map<Integer, Lead> getLeadMap() {
+        return leadMap;
     }
 
-    public void setOpportunityMap(Map<Integer, Opportunity> opportunityMap) {
+    public static Map<Integer, Contact> getContactMap() {
+        return contactMap;
+    }
+
+    public static void setContactMap(Map<Integer, Contact> contactMap) {
+        CRM.contactMap = contactMap;
+    }
+
+    public static Map<Integer, Opportunity> getOpportunityMap() {
+        return opportunityMap;
+    }
+
+    public static void setOpportunityMap(Map<Integer, Opportunity> opportunityMap) {
         CRM.opportunityMap = opportunityMap;
+    }
+
+    public static void setLeadMap(Map<Integer, Lead> leadMap) {
+      
+        CRM.leadMap = leadMap;
     }
 
     //================= CREATE A LEAD ==================
@@ -123,7 +146,16 @@ public class CRM {
 
             //List of Leads
             showLeadsNamesAndCompany();
-        }
+          
+   /* public void listIdName(){
+        if(!leadMap.isEmpty()){
+            System.out.println("Showing list of corresponding names and id's from leads");
+            for(Map.Entry<Integer,Lead> entry : leadMap.entrySet()){
+                System.out.println(entry.getKey() + " = " + entry.getValue().getName());
+            }
+        } else {
+            System.out.println("No leads found");
+        } */
 
         //Foot of method
         System.out.println();
@@ -162,7 +194,7 @@ public class CRM {
             String[] typed = scanner.nextLine().toLowerCase().split(" ");
             Lead fondedLead = new Lead();
 
-            //comprobar que length == 3
+            //comprobar que length == 3 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             while (!commandOk) {
                 if (!typed[2].matches(".*[0-9].*")) {
@@ -198,6 +230,7 @@ public class CRM {
     }
 
     //=================== CONVERT A LEAD INTO AN OPPORTUNITY ======================
+      
     public void convertLead(Scanner scanner) {
         //Header of the Method
         System.out.println();
@@ -267,7 +300,64 @@ public class CRM {
         }
     }
 
+   
+ /*
+    public void convertLead(Scanner scanner){
+        System.out.println(Colors.GREEN_BOLD_BRIGHT + "You selected to upgrade a LEAD to an OPPORTUNITY" + Colors.RESET);
+        //id
+        int id = IdNumber(scanner);
+        Lead leadToConvert = leadMap.get(id);
+        //creation of the Contact
+        Contact contact = ContactFromLead(id);
+        //product
+        printEnum("product");
+        Product product = productSelection(scanner);
+        //quantity
+        System.out.println("Please enter the quantity you want to purchase: ");
+        int quantity = quantityNumber(scanner);
+        //creation of the opportunity
+        Opportunity opportunity = OpportunityFromLead(product, quantity, contact);
+        //industry
+        System.out.println("Please insert the industry of the company");
+        printEnum("industry");
+        Industry industry = industrySelection(scanner);
+        //number of employee
+        System.out.println("Please insert the number of employees of the company");
+        int numberOfEmployees = quantityNumber(scanner);
+        //city
+        String country = countryInput(scanner);
+        //country
+        System.out.println("Please insert the city of the company");
+        String city = scanner.next();
+        String companyName =leadToConvert.getCompanyName();
+        //new account
+        Account account = new Account(industry,numberOfEmployees,city,country, companyName);
+        account.getContactList().add(contact);
+        account.getOpportunityList().add(opportunity);
+        leadMap.remove(id); //Leads are removed from the system once they have been successfully converted.
+        //lo elimino del hashmap que es donde lo estoy "almacenando" para ser accedido por el usuario.
+        System.out.println(Colors.GREEN_BOLD_BRIGHT +"Lead upgrade correctly!"+ Colors.RESET);
+        menu.displayMenu(scanner, this);
+    }  
+    */
+
+  
     //================== UTILITIES FOR CONVERT A LEAD INTO AN OPPORTUNITY =============
+      
+      //Find Opportunity
+       public static Opportunity OpportunityFromLead(Product product, int quantity, Contact contact){
+        Opportunity opportunity = new Opportunity(product, quantity, contact, Status.OPEN);
+        opportunityMap.put(opportunity.getId(), opportunity);
+        return opportunity;
+    }
+      
+      //Find Contact
+    public static Contact ContactFromLead(int id){
+        Lead leadToConvert = leadMap.get(id);
+        Contact contact = new Contact(leadToConvert.getName(), leadToConvert.getPhoneNumber(), leadToConvert.getEmailAddress(), leadToConvert.getCompanyName());
+        contactMap.put(contact.getId(),contact);
+        return contact;
+    }
 
     //Industry
     public Industry industrySelection(Scanner scanner){
@@ -347,13 +437,14 @@ public class CRM {
     }
 
     //Verify number
-    public int quantityNumber(Scanner scanner){
+    public static int quantityNumber(Scanner scanner){
         int quantity = 0;
         try {
             quantity = scanner.nextInt();
-            while (quantity < 1) {
+            if (quantity < 1) {
                 System.err.println("The number must be bigger than 1");
-                quantity = scanner.nextInt();
+                //quantity = 1;
+                quantity = quantityNumber(scanner);
             }
         }catch(Exception e){
             System.err.println("That´s not a number. Please try again");
@@ -413,6 +504,7 @@ public class CRM {
     }
 
     //=================== CHANGE STATUS ===========================
+    
     public void changeOppStatus(Scanner scanner) {
 
         //Header of the method
@@ -439,9 +531,10 @@ public class CRM {
         System.out.println();
         Menu.displayMenu(scanner, this);
     }
-
+      
     //============= UTILITIES METHODS ===========
-
+      
+    //Assign new Status
     public void changeNewStatus(Scanner scanner){
         boolean commandOk = false;
         String[] typed = scanner.nextLine().toLowerCase().split(" ");
@@ -482,5 +575,4 @@ public class CRM {
             System.out.println(key + ". " + name);
         }
     }
-
 }
