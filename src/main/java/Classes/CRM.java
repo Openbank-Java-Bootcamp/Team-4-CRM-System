@@ -146,6 +146,15 @@ public class CRM {
             //The company has no Leads
             if (leadMap.size() == 0) {
                 System.out.println(Colors.RESET + "The company has no leads yet");
+                System.out.println();
+                Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
+                System.out.println();
+                System.out.println(Colors.RESET + "---------------------------------------------------------------------------------");
+                System.out.println();
+                Scanner scanner = new Scanner(System.in);
+                System.out.println();
+                Menu.displayMenu(scanner, this);
+
             } else {
 
                 System.out.println(Colors.YELLOW_BOLD_BRIGHT + "The company owns the following Leads:");
@@ -214,33 +223,31 @@ public class CRM {
             System.out.println("For example, if you wants to show the Lead with id \"12\", you have to type"
                     + Colors.YELLOW_BRIGHT + " [lookup lead 12]");
 
-            boolean commandOk = false;
-            String[] typed = scanner.nextLine().toLowerCase().split(" ");
+
             Lead fondedLead = new Lead();
-
-            //comprobar que length == 3 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            while (!commandOk) {
-                if (!typed[2].matches(".*[0-9].*")) {
-                    System.out.println("The command entered is wrong. Please, try again");
-                    Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
-                    leadDetail(scanner, this);
-                }else{
-                    fondedLead = leadMap.get(Integer.parseInt(typed[2]));
-                    if (typed.length == 3 && typed[0].equals("lookup") && typed[1].equals("lead") && fondedLead != null) {
-                        commandOk = true;
-                    } else {
-                        System.out.println("The command entered is wrong. Please, try again");
-                        Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
-                        leadDetail(scanner, this);
-                    }
-                }
+            String typed = scanner.nextLine().toLowerCase();
+            if(typed.matches("lookup lead (\\d+$)")){
+            String[] string = typed.split(" ");
+            int id = Integer.parseInt(string[2]);
+            boolean valid = leadMap.containsKey(id);
+            if(valid){
+                fondedLead = leadMap.get(id);
             }
+            while (!valid){
+                System.out.println("The id does not exist. Please, try again");
+                Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
+                leadDetail(scanner, this);
+            }
+            } else {
+                System.out.println("The command entered is wrong. Please, try again");
+                Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
+                leadDetail(scanner, this);
+            }
+
             System.out.println(Colors.GREEN_BOLD_BRIGHT + "NAME: " + Colors.RESET + fondedLead.getName());
             System.out.println(Colors.GREEN_BOLD_BRIGHT + "PHONE NUMBER: " + Colors.RESET + fondedLead.getPhoneNumber());
             System.out.println(Colors.GREEN_BOLD_BRIGHT + "EMAIL: " + Colors.RESET + fondedLead.getEmailAddress());
             System.out.println(Colors.GREEN_BOLD_BRIGHT + "COMPANY: " + Colors.RESET + fondedLead.getCompanyName());
-
         }
 
         //Foot of method
@@ -323,47 +330,6 @@ public class CRM {
             Menu.displayMenu(scanner, this);
         }
     }
-
-   
- /*
-    public void convertLead(Scanner scanner){
-        System.out.println(Colors.GREEN_BOLD_BRIGHT + "You selected to upgrade a LEAD to an OPPORTUNITY" + Colors.RESET);
-        //id
-        int id = IdNumber(scanner);
-        Lead leadToConvert = leadMap.get(id);
-        //creation of the Contact
-        Contact contact = ContactFromLead(id);
-        //product
-        printEnum("product");
-        Product product = productSelection(scanner);
-        //quantity
-        System.out.println("Please enter the quantity you want to purchase: ");
-        int quantity = quantityNumber(scanner);
-        //creation of the opportunity
-        Opportunity opportunity = OpportunityFromLead(product, quantity, contact);
-        //industry
-        System.out.println("Please insert the industry of the company");
-        printEnum("industry");
-        Industry industry = industrySelection(scanner);
-        //number of employee
-        System.out.println("Please insert the number of employees of the company");
-        int numberOfEmployees = quantityNumber(scanner);
-        //city
-        String country = countryInput(scanner);
-        //country
-        System.out.println("Please insert the city of the company");
-        String city = scanner.next();
-        String companyName =leadToConvert.getCompanyName();
-        //new account
-        Account account = new Account(industry,numberOfEmployees,city,country, companyName);
-        account.getContactList().add(contact);
-        account.getOpportunityList().add(opportunity);
-        leadMap.remove(id); //Leads are removed from the system once they have been successfully converted.
-        //lo elimino del hashmap que es donde lo estoy "almacenando" para ser accedido por el usuario.
-        System.out.println(Colors.GREEN_BOLD_BRIGHT +"Lead upgrade correctly!"+ Colors.RESET);
-        menu.displayMenu(scanner, this);
-    }  
-    */
 
   
     //================== UTILITIES FOR CONVERT A LEAD INTO AN OPPORTUNITY =============
@@ -448,7 +414,7 @@ public class CRM {
             id = scanner.nextInt();
             boolean valid = leadMap.containsKey(id);
             while (!valid) {
-                System.err.println("Lead ID not valid");
+                System.err.println("Lead ID not valid. Try again.");
                 id = scanner.nextInt();
                 valid = leadMap.containsKey(id);
             }
@@ -536,19 +502,24 @@ public class CRM {
         System.out.println(Colors.GREEN_BOLD_BRIGHT + "You have selected the \"Change Opportunity status\" option");
         System.out.println(Colors.RESET);
         if (opportunityMap.isEmpty()) {
-            throw new Exception("The company has no Opportunities yet");
+            System.out.println("The company has no Opportunities");
+            System.out.println();
+            Menu.enterToContinue(Colors.YELLOW_BOLD_BRIGHT + "Press ENTER to continue...");
+            System.out.println();
+            System.out.println(Colors.RESET + "---------------------------------------------------------------------------------");
+            System.out.println();
+            Menu.displayMenu(scanner, this);
             //System.out.println(Colors.RESET + "The company has no Opportunities yet");
         } else {
             System.out.println(Colors.YELLOW_BOLD_BRIGHT + "The company owns the following Opportunities:");
             System.out.println(Colors.RESET);
             showOpportunities();
             System.out.println();
-        System.out.println("Please, enter the commands" + Colors.YELLOW_BOLD_BRIGHT + " [close-lost id]"
+            System.out.println("Please, enter the commands" + Colors.YELLOW_BOLD_BRIGHT + " [close-lost id]"
                     + Colors.RESET + " or " + Colors.YELLOW_BOLD_BRIGHT + "[close-won id]"
                     + Colors.RESET + " with the id of the Opportunity you want to change");
             System.out.println("For example, if you wants to close lost the Opportunity with id \"4321\", you have to type"
                 + Colors.YELLOW_BRIGHT + " [close-lost 4321]" + Colors.RESET);
-
             changeNewStatus(scanner);
 
         }
