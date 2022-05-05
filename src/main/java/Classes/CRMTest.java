@@ -4,6 +4,17 @@ import Enums.Product;
 import Enums.Status;
 import nl.altindag.console.ConsoleCaptor;
 
+import Enums.Product;
+import Enums.Status;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -129,6 +140,46 @@ class CRMTest {
     }
 
     @Test
+    public void changeOppStatus_opportunitiesMapEmpty(){
+        StringReader sr = new StringReader("close");
+        Scanner scan = new Scanner(sr);
+        assertThrows(Exception.class,() -> crm.changeOppStatus(scan));
+    }
+
+    @Test
+    public void changeNewStatus_PermittedCommand(){
+        //Opportunity
+        Product prod = Product.BOX;
+        Contact contact = new Contact("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
+        Status status = Status.OPEN;
+        Opportunity op = new Opportunity(prod,3,contact,status);
+        Map<Integer,Opportunity> mapOp = new HashMap<>();
+        mapOp.put(op.getId(),op);
+        crm.setOpportunityMap(mapOp);
+
+        Scanner scanner = new Scanner(new StringReader("close-lost 1"));
+        crm.changeNewStatus(scanner);
+
+        assertEquals(mapOp.get(1).getStatus(), Status.CLOSED_LOST);
+    }
+
+    @Test
+    public void changeNewStatus_NoPermittedCommand(){
+        //Opportunity
+        Product prod = Product.BOX;
+        Contact contact = new Contact("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
+        Status status = Status.OPEN;
+        Opportunity op = new Opportunity(prod,3,contact,status);
+        Map<Integer,Opportunity> mapOp = new HashMap<>();
+        mapOp.put(op.getId(),op);
+        crm.setOpportunityMap(mapOp);
+
+        Scanner scanner = new Scanner(new StringReader("close 1"));
+        crm.changeNewStatus(scanner);
+
+        assertThrows(Exception.class,() -> crm.changeNewStatus(scanner));
+    }
+
     public void ContactFromLead_Works(){
         Lead l = new Lead("Paula", "662092398", "paula@gmail.com", "Matucos");
         Map<Integer,Lead> leadMap = new HashMap<>();

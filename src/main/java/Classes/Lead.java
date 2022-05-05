@@ -11,11 +11,17 @@ public class Lead {
     private int id;
     public static int idCount = 1;
 
+    public Lead() {
+    }
+
+
     public Lead(String name, String phoneNumber, String emailAddress, String companyName) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.companyName = companyName;
+        //this.id = idCount;
+        //Lead.idCount++;
         this.id = idCount++;
     }
 
