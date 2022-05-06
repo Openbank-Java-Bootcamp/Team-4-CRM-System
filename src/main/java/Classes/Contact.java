@@ -8,7 +8,7 @@ public class Contact {
     private String emailAddress;
     private String companyName;
     private int id;
-    private int idCount =1;
+    public static int idCount =1;
 
     public Contact(String name, String phoneNumber, String emailAddress, String companyName) {
         this.name = name;

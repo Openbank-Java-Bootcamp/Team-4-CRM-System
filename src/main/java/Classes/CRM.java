@@ -68,7 +68,6 @@ public class CRM {
         System.out.println(Colors.RESET);
 
         Lead new_lead = new Lead (nameLead(scanner), phoneNumberLead(scanner), emailLead(scanner), companyNameLead(scanner));
-        System.out.println(new_lead.getId());
 
         leadMap.put(new_lead.getId(), new_lead);
 
@@ -87,7 +86,7 @@ public class CRM {
         String name = scanner.nextLine();
         boolean isNumber = false;
         while (!isNumber) { //valida que no hayan numeros
-             if(!name.matches(".*[0-9].*")){
+             if(!name.matches(".*[0-9].*") && name!=""){
                  isNumber = true;
              }
              else{
@@ -387,16 +386,16 @@ public class CRM {
         System.out.println("Please enter de " +  Colors.YELLOW_BOLD_BRIGHT + " [ID] " + Colors.RESET+ "of the lead you would like to upgrade: ");
         int id = 0;
         try {
-            id = scanner.nextInt();
+            //id = scanner.nextInt();
+            String idString = scanner.nextLine();
+            id = Integer.parseInt(idString);
             boolean valid = leadMap.containsKey(id);
-            while (!valid) {
+            if (!valid) {
                 System.err.println("Lead ID not valid. Try again.");
-                id = scanner.nextInt();
-                valid = leadMap.containsKey(id);
+                id = IdNumber(scanner);
             }
         }catch(Exception e){
             System.err.println("That´s not a number. Please try again");
-            scanner.next();
             id = IdNumber(scanner);
         }
         return id;
@@ -408,13 +407,12 @@ public class CRM {
         try {
             quantity = scanner.nextInt();
             if (quantity < 1) {
-                System.err.println("The number must be bigger than 1");
+                System.err.println("The number must be at least 1");
                 //quantity = 1;
                 quantity = quantityNumber(scanner);
             }
         }catch(Exception e){
             System.err.println("That´s not a number. Please try again");
-            scanner.next();
             quantity = quantityNumber(scanner);
         }
         return quantity;
