@@ -29,9 +29,5 @@ class MenuTest {
         assertThrows(Exception.class,() -> Menu.selectOption(scanner,crm));
     }
 
-    public void selectOption_PermittedCommand(){
-        Scanner scanner = new Scanner(new StringReader(""));
-        assertThrows(Exception.class,() -> Menu.selectOption(scanner,crm));
 
-    }
 }

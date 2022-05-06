@@ -18,7 +18,7 @@ public class Main {
 
         //FOR TESTING...........
 
-        /*Lead lead1 = new Lead("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
+        Lead lead1 = new Lead("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
         Lead lead2 = new Lead("Anier Alvarez", "675345829", "pedro@yahho.es", "Farmacy");
         Lead lead3 = new Lead("Laura Perez", "675345829", "pedro@yahho.es", "Mercadona");
 
@@ -27,7 +27,7 @@ public class Main {
         mapLeads.put(lead2.getId(), lead2);
         mapLeads.put(lead3.getId(), lead3);
 
-        CRM.setLeadMap(mapLeads);*/
+        CRM.setLeadMap(mapLeads);
 
         //Opportunity
         Product prod = Product.BOX;
