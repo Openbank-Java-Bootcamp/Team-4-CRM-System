@@ -18,7 +18,7 @@ public class Main {
 
         //FOR TESTING...........
 
-        Lead lead1 = new Lead("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
+        /*Lead lead1 = new Lead("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
         Lead lead2 = new Lead("Anier Alvarez", "675345829", "pedro@yahho.es", "Farmacy");
         Lead lead3 = new Lead("Laura Perez", "675345829", "pedro@yahho.es", "Mercadona");
 
@@ -36,7 +36,7 @@ public class Main {
         Opportunity op = new Opportunity(prod,3,contact,status);
         Map<Integer,Opportunity> mapOp = new HashMap<>();
         mapOp.put(op.getId(),op);
-        CRM.setOpportunityMap(mapOp);
+        CRM.setOpportunityMap(mapOp);*/
 
         //END OF TESTING..........
 

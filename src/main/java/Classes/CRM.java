@@ -281,10 +281,11 @@ public class CRM {
             System.out.println("Please insert the number of employees of the company");
             int numberOfEmployees = quantityNumber(scanner);
 
-            //city
+            //country
+
             String country = countryInput(scanner);
 
-            //country
+            //city
             System.out.println("Please insert the city of the company");
             String city = scanner.next();
 
@@ -293,7 +294,6 @@ public class CRM {
             account.getContactList().add(contact);
             account.getOpportunityList().add(opportunity);
             leadMap.remove(id); //Leads are removed from the system once they have been successfully converted.
-            //lo elimino del hashmap que es donde lo estoy "almacenando" para ser accedido por el usuario.
             System.out.println(Colors.GREEN_BOLD_BRIGHT + "Lead upgrade correctly!" + Colors.RESET);
 
             //Foot of method
@@ -327,7 +327,7 @@ public class CRM {
     //Industry
     public Industry industrySelection(Scanner scanner){
         Industry i;
-        String industry = scanner.next().toUpperCase();
+        String industry = scanner.nextLine().toUpperCase();
         switch (industry){
             case "PRODUCE":
                 i = Industry.PRODUCE;
@@ -359,7 +359,7 @@ public class CRM {
     //Product
     public Product productSelection(Scanner scanner){
         Product p;
-        String product = scanner.next().toUpperCase();
+        String product = scanner.nextLine().toUpperCase();
         switch (product){
             case "HYBRID":
                 p = Product.HYBRID;
@@ -405,7 +405,8 @@ public class CRM {
     public static int quantityNumber(Scanner scanner){
         int quantity = 0;
         try {
-            quantity = scanner.nextInt();
+            String quantityString = scanner.nextLine();
+            quantity = Integer.parseInt(quantityString);
             if (quantity < 1) {
                 System.err.println("The number must be at least 1");
                 //quantity = 1;
@@ -459,7 +460,7 @@ public class CRM {
 
     public static String countryInput(Scanner scanner){
         System.out.println("Please insert the country of the company");
-        String city = scanner.next();
+        String city = scanner.nextLine();
         while (!validateCountry(city)){
             System.err.println("Thats not a valid country. Please try again");
             city = scanner.next();

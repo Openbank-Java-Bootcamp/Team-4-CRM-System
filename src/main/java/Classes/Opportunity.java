@@ -17,8 +17,7 @@ public class Opportunity {
         this.quantity = quantity;
         this.decisionMaker = decisionMaker;
         this.status = status;
-        this.id = idCount;
-        Opportunity.idCount++;
+        this.id = idCount++;
     }
 
     public Opportunity() {
