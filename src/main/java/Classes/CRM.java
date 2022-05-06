@@ -536,12 +536,7 @@ public class CRM {
       
     //Assign new Status
 
-    public void changeNewStatus(Scanner scanner) throws Exception {
-        boolean commandOk = false;
-        String[] typed = scanner.nextLine().toLowerCase().split(" ");
-        Opportunity opportunity = new Opportunity();
-
-    public static void changeNewStatus(Scanner scanner) throws Exception{
+    public static void changeNewStatus(Scanner scanner){
         try {
             String[] typed = scanner.nextLine().toLowerCase().split(" ");
             Opportunity opportunity = new Opportunity();
@@ -578,8 +573,7 @@ public class CRM {
         } catch (Exception e) {
             //System.out.println(Colors.RED_BRIGHT + e.getMessage() + Colors.RESET);
             System.out.println("Please, try again");
-            throw new Exception("cualquiera");
-            //changeNewStatus(scanner);
+            changeNewStatus(scanner);
         }
     }
 
