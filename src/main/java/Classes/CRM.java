@@ -59,7 +59,7 @@ public class CRM {
 
 
 
-    public void createLead(Scanner scanner) throws Exception {
+    public void createLead(Scanner scanner) {
 
         //Header of the method
         System.out.println();
@@ -72,7 +72,6 @@ public class CRM {
 
         leadMap.put(new_lead.getId(), new_lead);
 
-
         //Foot of the method
         System.out.println();
         System.out.println(Colors.YELLOW_BOLD_BRIGHT + "You have inserted a Lead");
@@ -82,7 +81,7 @@ public class CRM {
         System.out.println();
         Menu.displayMenu(scanner, this);
     }
-    public String nameLead(Scanner scanner) throws Exception {
+    public String nameLead(Scanner scanner) {
 
         System.out.println("Please insert the name of the new lead");
         String name = scanner.nextLine();
@@ -137,7 +136,7 @@ public class CRM {
     }
 
     //====================== SHOW LEADS =======================
-    public void listIdName(CRM crm) throws Exception {
+    public void listIdName(CRM crm)  {
 
             //Header of the Method
             System.out.println();
@@ -163,29 +162,6 @@ public class CRM {
                 //List of Leads
                 showLeadsNamesAndCompany();
 
-          
-   /* public void listIdName(){
-        if(!leadMap.isEmpty()){
-            System.out.println("Showing list of corresponding names and id's from leads");
-            for(Map.Entry<Integer,Lead> entry : leadMap.entrySet()){
-                System.out.println(entry.getKey() + " = " + entry.getValue().getName());
-            }
-        } else {
-            System.out.println("No leads found");
-        } */
-
-
-
-                /*
-            public void listIdName(){
-                if(!leadMap.isEmpty()){
-                    System.out.println("Showing list of corresponding names and id's from leads");
-                    for(Map.Entry<Integer,Lead> entry : leadMap.entrySet()){
-                    System.out.println(entry.getKey() + " = " + entry.getValue().getName());
-                } else {
-                    System.out.println("No leads found");
-            } */
-
 
                 //Foot of method
                 System.out.println();
@@ -203,7 +179,7 @@ public class CRM {
 
     //========================== SHOW DETAILS OF A LEAD ===========================
 
-    public void leadDetail(Scanner scanner, CRM crm) throws Exception {
+    public void leadDetail(Scanner scanner, CRM crm)  {
         //Header of the Method
         System.out.println();
         System.out.println(Colors.GREEN_BOLD_BRIGHT + "You have selected the \"Show details of a Lead\" option");
@@ -262,7 +238,7 @@ public class CRM {
 
     //=================== CONVERT A LEAD INTO AN OPPORTUNITY ======================
       
-    public void convertLead(Scanner scanner) throws Exception {
+    public void convertLead(Scanner scanner) {
         //Header of the Method
         System.out.println();
         //The company has no Leads
@@ -495,7 +471,7 @@ public class CRM {
 
     //=================== CHANGE STATUS ===========================
     
-    public void changeOppStatus(Scanner scanner) throws Exception {
+    public void changeOppStatus(Scanner scanner) {
 
         //Header of the method
         System.out.println();
@@ -540,8 +516,6 @@ public class CRM {
         try {
             String[] typed = scanner.nextLine().toLowerCase().split(" ");
             Opportunity opportunity = new Opportunity();
-        
-
             if (typed.length != 2) {
                 throw new Exception("The command entered or the id are wrong");
             }
@@ -561,12 +535,14 @@ public class CRM {
                                   + Colors.RESET);
                         }
                         default -> {
-                            throw new Exception("The command entered is wrong");
+                            //System.out.println(Colors.RED_BRIGHT + e.getMessage() + Colors.RESET);
+                            System.out.println("The command entered is wrong. Try again");
+                            changeNewStatus(scanner);
                         }
                     }
                 } else {
-                    throw new Exception("The id entered not exist");
-
+                    System.out.println("The id entered does not exist. Try again");
+                    changeNewStatus(scanner);
                 }
             }
 
