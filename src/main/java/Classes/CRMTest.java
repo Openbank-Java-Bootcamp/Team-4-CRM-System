@@ -47,7 +47,6 @@ class CRMTest {
         StringReader sr = new StringReader("s");
         Scanner scan = new Scanner(sr);
         ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        assertThrows(Exception.class,() -> crm.IdNumber(scan));
         List<String> s = consoleCaptor.getErrorOutput();
         consoleCaptor.close();
         assertThat(s.contains("That´s not a number. Please try again"));
@@ -64,34 +63,18 @@ class CRMTest {
         assertEquals(l.getId(), crm.IdNumber(scan) );
     }
 
-    //check if we can add shaun ideas
-    /*@Test
-    public void IdNumber_err_notLeadId(){
-        Lead l = new Lead("pepe", "123123123", "pepe@gmail.com", "Matucos");
-        Map<Integer,Lead> leadMap = new HashMap<>();
-        leadMap.put(l.getId(), l);
-        crm.setLeadMap(leadMap);
-        StringReader sr = new StringReader("1");
-        Scanner scan = new Scanner(sr);
-        ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        crm.IdNumber(scan);
-        List<String> s = consoleCaptor.getErrorOutput();
-        consoleCaptor.close();
-        assertThat(s.contains("Lead ID not valid"));
-    }*/
     @Test
     public void quantityNumber_Throw_notINT(){
         StringReader sr = new StringReader("s");
         Scanner scan = new Scanner(sr);
         ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        assertThrows(Exception.class,() -> crm.quantityNumber(scan));
         List<String> s = consoleCaptor.getErrorOutput();
         consoleCaptor.close();
         assertThat(s.contains("That´s not a number. Please try again"));
 
     }
 
-    //check if we can check shaun ideas
+
     @Test
     public void quantityNumber_err_minus1(){
         StringReader sr = new StringReader("1");
@@ -135,18 +118,6 @@ class CRMTest {
         assertThat(s.contains("Thats not a valid country. Please try again"));
     }
 
-   //@Test
-    //this test is not working, because it calls another method at the end;
-    /*public void changeOppStatus_NoPermittedCommand(){
-        StringReader sr = new StringReader("Spain");
-        Scanner scan = new Scanner(sr);
-        ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        crm.changeOppStatus(scan);
-        List<String> s = consoleCaptor.getStandardOutput();
-        consoleCaptor.close();
-        assertEquals("The company has no Opportunities",s.get(0));
-    }*/
-
 
     @Test
     public void changeNewStatus_PermittedCommand(){
@@ -164,22 +135,6 @@ class CRMTest {
 
         assertEquals(mapOp.get(1).getStatus(), Status.CLOSED_LOST);
     }
-
-    /*@Test
-    public void changeNewStatus_NoPermittedCommand(){
-        //Opportunity
-        Product prod = Product.BOX;
-        Contact contact = new Contact("Pedro Lopez", "675345829", "pedro@yahho.es", "Movil Phone");
-        Status status = Status.OPEN;
-        Opportunity op = new Opportunity(prod,3,contact,status);
-        Map<Integer,Opportunity> mapOp = new HashMap<>();
-        mapOp.put(op.getId(),op);
-        CRM.setOpportunityMap(mapOp);
-
-        Scanner scanner = new Scanner(new StringReader("close 1"));
-        //"The command entered is wrong. Try again"
-        assertThrows(Exception.class,() -> CRM.changeNewStatus(scanner));
-    }*/
 
 
     @Test
@@ -288,20 +243,6 @@ class CRMTest {
         consoleCaptor.close();
     }
 
-    //does not work yet
-    /*
-    @Test
-    public void IndustrySelection_err(){
-        StringReader sr = new StringReader("POEMA");
-        Scanner scan = new Scanner(sr);
-        ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        crm.industrySelection(scan);
-        List<String> s = consoleCaptor.getErrorOutput();
-        consoleCaptor.close();
-        assertThat(s.contains("Invalid input. Please try again!"));
-    }
-
-     */
 
     @Test
     public void ProductSelection_HYBRID_works(){
@@ -339,20 +280,6 @@ class CRMTest {
         assertThat(s.contains("BOX selected!"));
     }
 
-    //does not work yet
-    /*
-    @Test
-    public void ProductSelection_err(){
-        StringReader sr = new StringReader("error");
-        Scanner scan = new Scanner(sr);
-        ConsoleCaptor consoleCaptor = new ConsoleCaptor();
-        crm.productSelection(scan);
-        List<String> s = consoleCaptor.getStandardOutput();
-        consoleCaptor.close();
-        assertThat(s.contains("Invalid input. Please try again!"));
-    }
-
-     */
 
 
     //================= CREATE A LEAD TEST==================
@@ -381,6 +308,5 @@ class CRMTest {
         Scanner scan = new Scanner(sr);
         assertEquals("Matucos", crm.companyNameLead(scan) );
     }
-
 
 }
